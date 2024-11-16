@@ -251,53 +251,47 @@
         document.getElementById('consent-form').style.display = 'none';
     }
 
-    async function exportData() {
-        const age = prompt("Please enter your age (e.g., 'underclassmen' or 'upperclassmen'):");
+async function exportData() {
+    const age = prompt("Please enter your age (e.g., 'underclassmen' or 'upperclassmen'):");
 
-        // Collect scores from the survey
-        const DA = calculateScore([1, 2, 5, 6, 9, 10, 13, 14, 17, 18]);
-        const SA = calculateScore([3, 4, 7, 8, 11, 12, 15, 16, 19, 20]);
-        const DM = calculateScore([1, 5, 9, 13, 17]);
-        const DS = calculateScore([2, 6, 10, 14, 18]);
-        const SM = calculateScore([3, 7, 11, 15, 19]);
-        const SS = calculateScore([4, 8, 12, 16, 20]);
-        const AAPS = document.getElementById('feedback').textContent.includes('active') ? 'Active' : 'Passive';
+    const DA = calculateScore([1, 2, 5, 6, 9, 10, 13, 14, 17, 18]);
+    const SA = calculateScore([3, 4, 7, 8, 11, 12, 15, 16, 19, 20]);
+    const DM = calculateScore([1, 5, 9, 13, 17]);
+    const DS = calculateScore([2, 6, 10, 14, 18]);
+    const SM = calculateScore([3, 7, 11, 15, 19]);
+    const SS = calculateScore([4, 8, 12, 16, 20]);
+    const AAPS = document.getElementById('feedback').textContent.includes('active') ? 'Active' : 'Passive';
 
-        // Prepare the data payload
-        const data = {
-            age,
-            DA,
-            SA,
-            DM,
-            DS,
-            SM,
-            SS,
-            AAPS,
-        };
+    const data = { age, DA, SA, DM, DS, SM, SS, AAPS };
 
-        try {
-            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-            const apiUrl = 'https://script.google.com/macros/s/AKfycbzu5Z2VUuduMrSbnPbEaHPTeijZENSQJ5ZojyJykdsroEOpSOwOhGtJd0ZU_RTDcWuF/exec';
+    try {
+        const response = await fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
 
-            const response = await fetch(proxyUrl + apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
-
+        // Check if the response is JSON
+        if (response.headers.get('Content-Type')?.includes('application/json')) {
             const result = await response.json();
             if (result.status === 'success') {
                 alert('Data exported successfully!');
             } else {
                 alert('Failed to export data. Please try again.');
             }
-        } catch (error) {
-            alert('An error occurred during export: ' + error.message);
+        } else {
+            // Response is not JSON (likely an error page)
+            const errorText = await response.text();
+            console.error('Error response:', errorText);
+            alert('An unexpected error occurred. Please check the console for details.');
         }
+    } catch (error) {
+        alert('An error occurred during export: ' + error.message);
     }
+}
+
 
 
     function calculateScore(indices) {
