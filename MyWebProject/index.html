@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Approach & Procrastination Survey V5</title>
+    <title>Learning Approach & Procrastination Survey V6</title>
     <style>
 
         body {
@@ -253,8 +253,6 @@
 
 async function exportData() {
     const age = prompt("Please enter your age (e.g., 'underclassmen' or 'upperclassmen')");
-
-    // Collect scores from the survey
     const DA = calculateScore([1, 2, 5, 6, 9, 10, 13, 14, 17, 18]);
     const SA = calculateScore([3, 4, 7, 8, 11, 12, 15, 16, 19, 20]);
     const DM = calculateScore([1, 5, 9, 13, 17]);
@@ -271,7 +269,7 @@ async function exportData() {
         DS,
         SM,
         SS,
-        AAPS
+        AAPS,
     };
 
     try {
@@ -293,6 +291,7 @@ async function exportData() {
         alert('An error occurred during export: ' + error.message);
     }
 }
+
 
 
 
