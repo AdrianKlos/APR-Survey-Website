@@ -275,7 +275,7 @@ async function exportData() {
     };
 
     try {
-        const response = await fetch('http://localhost:3000/proxy', {
+        const response = await fetch('http://<IP_ADDRESS_HERE>:3000/proxy', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
