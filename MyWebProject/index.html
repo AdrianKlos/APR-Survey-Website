@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Approach & Procrastination Survey V11</title>
+    <title>Learning Approach & Procrastination Survey V12</title>
     <style>
 
         body {
@@ -276,6 +276,7 @@ async function exportData() {
       console.log('Sending POST request...');
       const response = await fetch('https://script.google.com/macros/s/AKfycbxaVtVFMNVvmOMe_tlG0MDn0hWF3F7XugiUsD3IUvRwqNf9S9_nSLr8PoWKmbgrUyjK/exec', {
       method: 'POST',
+      mode: 'no-cors', // Use 'no-cors' mode
       headers: {
         'Content-Type': 'application/json',
       },
