@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Approach & Procrastination Survey V3</title>
+    <title>Learning Approach & Procrastination Survey V4</title>
     <style>
 
         body {
@@ -272,24 +272,30 @@ async function exportData() {
         AAPS,
     };
 
-    try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzUuYCAMIHqcXPDi9ZsUU9ECzvsH8MoI5LknFyt3sPLSnbI211ErsGuq17HKPtOpJib/exec', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
+try {
+    console.log('Sending POST request...');
+    const response = await fetch('https://script.google.com/macros/s/AKfycbxND1utdwe6kdRV7uVasj5zhCAC1T_FyiNJc8Y4m27aTASHI0avUnzzwpEccfDfg_eX/exec', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
 
-        const result = await response.json();
-        if (result.status === 'success') {
-            alert('Data exported successfully!');
-        } else {
-            alert('Failed to export data: ' + result.message);
-        }
-    } catch (error) {
-        alert('An error occurred during export: ' + error.message);
+    console.log('Response received:', response);
+    const result = await response.json();
+    console.log('Parsed JSON response:', result);
+
+    if (result.status === 'success') {
+        alert('Data exported successfully!');
+    } else {
+        alert('Failed to export data: ' + result.message);
     }
+} catch (error) {
+    console.error('An error occurred during export:', error);
+    alert('An error occurred during export: ' + error.message);
+}
+
 }
 
     function calculateScore(indices) {
