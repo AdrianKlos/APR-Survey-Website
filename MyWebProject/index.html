@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Approach & Procrastination Survey V19</title>
+    <title>Learning Approach & Procrastination Survey V20</title>
     <style>
 
         body {
@@ -66,6 +66,7 @@
     <button onclick="showBackground()">I Consent</button>
     <br>
     <button onclick="declineSurvey()">I Do Not Consent</button>
+    <br>
 </div>
 
 <div id="background-section" style="display: none;">
@@ -82,6 +83,7 @@
             </select>
         </div>
         <button type="button" onclick="showSurvey()">Next</button>
+        <br>
     </form>
 </div>
     
@@ -97,6 +99,7 @@
         <button onclick="showPartB()">Continue to Section 2</button>
     </div>
     <button id="submit-part-b" onclick="submitPartB()" style="display: none;">Submit Section 2</button>
+    <br>
 </div>
 <div id="feedback-section" style="display: none;">
     <h1>Your Final Results</h1>
@@ -260,9 +263,10 @@
         } else {
             feedback += "You are a passive procrastinator. You procrastinate subconsciously and counterproductively.";
          }
-            feedback += "Thank you for taking this survey. If you disliked any of your results, don't worry, they 
-are common and won’t affect you negatively in any way. If you want more information, send a 
-request for this paper to olsen1412@students.d211.org. It will be available in May.";
+            feedback += feedback += "Thank you for taking this survey. If you disliked any of your results, don’t worry, they " +
+            "are common and won’t affect you negatively in any way. If you want more information, send a " +
+            "request for this paper to olsen1412@students.d211.org. It will be available in May.";
+
             
         document.getElementById('survey-section').style.display = 'none';
         document.getElementById('feedback').innerHTML = feedback;
