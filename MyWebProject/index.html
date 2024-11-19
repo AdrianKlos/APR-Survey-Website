@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Approach & Procrastination Survey V22</title>
+    <title>Learning Approach & Procrastination Survey V23</title>
     <style>
 
         body {
@@ -263,7 +263,7 @@
         } else {
             feedback += "You are a passive procrastinator. You procrastinate subconsciously and counterproductively.";
          }
-            feedback += feedback += "Thank you for taking this survey. If you disliked any of your results, don’t worry, they " +
+            feedback += " Thank you for taking this survey. If you disliked any of your results, don’t worry, they " +
             "are common and won’t affect you negatively in any way. If you want more information, send a " +
             "request for this paper to olsen1412@students.d211.org. It will be available in May.";
 
@@ -271,7 +271,7 @@
         document.getElementById('survey-section').style.display = 'none';
         document.getElementById('feedback').innerHTML = feedback;
         document.getElementById('feedback-section').style.display = 'block';
-        exportData();
+        exportData(procrastinationAverage);
     }
 
     function declineSurvey() {
@@ -279,7 +279,7 @@
         document.getElementById('consent-form').style.display = 'none';
     }
 
-async function exportData() {
+async function exportData(procrastinationAverage) {
     const age = document.getElementById('grade').value;
     const DA = calculateScore([1, 2, 5, 6, 9, 10, 13, 14, 17, 18]);
     const SA = calculateScore([3, 4, 7, 8, 11, 12, 15, 16, 19, 20]);
