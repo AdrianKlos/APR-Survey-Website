@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AP Research Survey</title>
+    <title>AP Research Survey V1</title>
     <style>
 
         body {
@@ -286,27 +286,27 @@ function submitPartB() {
 }
 
 
-    function declineSurvey() {
+function declineSurvey() {
         document.getElementById('consent-form').style.display = 'none';
         document.getElementById('declined').style.display = 'block';
-    }
+}
 
 async function exportData(procrastinationAverage) {
     const age = document.getElementById('grade').value;
     
-	const deepIndices = [1, 2, 5, 6, 9, 10, 13, 14, 17, 18];
-	const surfaceIndices = [3, 4, 7, 8, 11, 12, 15, 16, 19, 20];
-	const deepMentalIndices = [1, 5, 9, 13, 17];
-	const deepSocialIndices = [2, 6, 10, 14, 18];
-	const surfaceMentalIndices = [3, 7, 11, 15, 19];
-	const surfaceSocialIndices = [4, 8, 12, 16, 20];
+    const deepIndices = [1, 2, 5, 6, 9, 10, 13, 14, 17, 18];
+    const surfaceIndices = [3, 4, 7, 8, 11, 12, 15, 16, 19, 20];
+    const deepMentalIndices = [1, 5, 9, 13, 17];
+    const deepSocialIndices = [2, 6, 10, 14, 18];
+    const surfaceMentalIndices = [3, 7, 11, 15, 19];
+    const surfaceSocialIndices = [4, 8, 12, 16, 20];
 
-	const DA = calculateScoreB(deepIndices);
-	const SA = calculateScoreB(surfaceIndices);
-	const DM = calculateScoreB(deepMentalIndices);
-	const DS = calculateScoreB(deepSocialIndices);
-	const SM = calculateScoreB(surfaceMentalIndices);
-	const SS = calculateScoreB(surfaceSocialIndices);
+    const DA = calculateScoreB(deepIndices);
+    const SA = calculateScoreB(surfaceIndices);
+    const DM = calculateScoreB(deepMentalIndices);
+    const DS = calculateScoreB(deepSocialIndices);
+    const SM = calculateScoreB(surfaceMentalIndices);
+    const SS = calculateScoreB(surfaceSocialIndices);
 
     const AAPS = procrastinationAverage;
 
