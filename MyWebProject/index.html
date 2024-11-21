@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AP Research Survey V25</title>
+    <title>AP Research Survey V26</title>
     <style>
 
         body {
@@ -276,7 +276,7 @@ function submitPartB() {
         feedback += "Your results indicate that you are a passive procrastinator. You tend to procrastinate subconsciously and counterproductively.";
     }
     feedback += " Thank you for taking this survey. If you disliked any of your results, don’t worry, they are common and won’t affect you negatively in any way. If you want more information, send a " +
-            "request for this paper to olsen1412@students.d211.org. It will be available in May.";
+            "request for this paper to olsen1412@students.d211.org. It will be made available in May.";
 
     document.getElementById('survey-section').style.display = 'none';
     document.getElementById('feedback').innerHTML = feedback;
@@ -292,12 +292,21 @@ function submitPartB() {
 
 async function exportData(procrastinationAverage) {
     const age = document.getElementById('grade').value;
-    const DA = calculateScore([1, 2, 5, 6, 9, 10, 13, 14, 17, 18]);
-    const SA = calculateScore([3, 4, 7, 8, 11, 12, 15, 16, 19, 20]);
-    const DM = calculateScore([1, 5, 9, 13, 17]);
-    const DS = calculateScore([2, 6, 10, 14, 18]);
-    const SM = calculateScore([3, 7, 11, 15, 19]);
-    const SS = calculateScore([4, 8, 12, 16, 20]);
+    
+	const deepIndices = [1, 2, 5, 6, 9, 10, 13, 14, 17, 18];
+	const surfaceIndices = [3, 4, 7, 8, 11, 12, 15, 16, 19, 20];
+	const deepMentalIndices = [1, 5, 9, 13, 17];
+	const deepSocialIndices = [2, 6, 10, 14, 18];
+	const surfaceMentalIndices = [3, 7, 11, 15, 19];
+	const surfaceSocialIndices = [4, 8, 12, 16, 20];
+
+	const DA = calculateScore(deepIndices);
+	const SA = calculateScore(surfaceIndices);
+	const DM = calculateScore(deepMentalIndices);
+	const DS = calculateScore(deepSocialIndices);
+	const SM = calculateScore(surfaceMentalIndices);
+	const SM = calculateScore(surfaceSocialIndices);
+
     const AAPS = procrastinationAverage;
 
     const data = {
@@ -341,15 +350,18 @@ function calculateScore(indices) {
 
     indices.forEach(index => {
         const value = formData.get(`question-a${index}`);
-        if (value) { // Check if the question was answered
+        
+        if (value !== null && value !== undefined) {
+            console.log(`Answer for question-a${index}: ${value}`);
             totalScore += parseInt(value, 10);
             answeredCount++;
+        } else {
+            console.log(`No answer for question-a${index}, value is: ${value}`);
         }
     });
 
-    return answeredCount > 0 ? totalScore / answeredCount : 0; // Return average or 0 if no answers
+    return answeredCount > 0 ? totalScore / answeredCount : 0;
 }
-
 
 </script>
 </body>
