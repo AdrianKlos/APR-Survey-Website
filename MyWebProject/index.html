@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AP Research Survey V26</title>
+    <title>AP Research Survey</title>
     <style>
 
         body {
@@ -231,8 +231,8 @@ function submitPartA() {
     const deepIndices = [1, 2, 5, 6, 9, 10, 13, 14, 17, 18];
     const surfaceIndices = [3, 4, 7, 8, 11, 12, 15, 16, 19, 20];
 
-    const deepAverage = calculateScore(deepIndices);
-    const surfaceAverage = calculateScore(surfaceIndices);
+    const deepAverage = calculateScoreA(deepIndices);
+    const surfaceAverage = calculateScoreA(surfaceIndices);
 
     let feedback = '';
     if (deepAverage > surfaceAverage) {
@@ -300,12 +300,12 @@ async function exportData(procrastinationAverage) {
 	const surfaceMentalIndices = [3, 7, 11, 15, 19];
 	const surfaceSocialIndices = [4, 8, 12, 16, 20];
 
-	const DA = calculateScore(deepIndices);
-	const SA = calculateScore(surfaceIndices);
-	const DM = calculateScore(deepMentalIndices);
-	const DS = calculateScore(deepSocialIndices);
-	const SM = calculateScore(surfaceMentalIndices);
-	const SM = calculateScore(surfaceSocialIndices);
+	const DA = calculateScoreB(deepIndices);
+	const SA = calculateScoreB(surfaceIndices);
+	const DM = calculateScoreB(deepMentalIndices);
+	const DS = calculateScoreB(deepSocialIndices);
+	const SM = calculateScoreB(surfaceMentalIndices);
+	const SS = calculateScoreB(surfaceSocialIndices);
 
     const AAPS = procrastinationAverage;
 
@@ -342,7 +342,7 @@ async function exportData(procrastinationAverage) {
     }
 }
 
-function calculateScore(indices) {
+function calculateScoreA(indices) {
     const form = document.getElementById('survey-form');
     const formData = new FormData(form);
     let totalScore = 0;
@@ -357,6 +357,27 @@ function calculateScore(indices) {
             answeredCount++;
         } else {
             console.log(`No answer for question-a${index}, value is: ${value}`);
+        }
+    });
+
+    return answeredCount > 0 ? totalScore / answeredCount : 0;
+}
+
+function calculateScoreB(indices) {
+    const form = document.getElementById('survey-form');
+    const formData = new FormData(form);
+    let totalScore = 0;
+    let answeredCount = 0;
+
+    indices.forEach(index => {
+        const value = formData.get(`question-b${index}`);
+        
+        if (value !== null && value !== undefined) {
+            console.log(`Answer for question-b${index}: ${value}`);
+            totalScore += parseInt(value, 10);
+            answeredCount++;
+        } else {
+            console.log(`No answer for question-b${index}, value is: ${value}`);
         }
     });
 
