@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AP Research Survey V3</title>
+    <title>AP Research Survey V4</title>
     <style>
 
         body {
@@ -321,26 +321,30 @@ async function exportData(procrastinationAverage) {
         AAPS,
     };
 
-    try {
-        const response = await fetch('https://apresearchsurvey.hopto.org/proxy', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
-
+try {
+    console.log("Sending data:", data);
+    const response = await fetch('https://apresearchsurvey.hopto.org/proxy', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    console.log("Response received:", response);
+    const responseData = await response.json();
+    console.log("Response data:", responseData);
         if (!response.ok) {
-            throw new Error(`HTTPS error! Status: ${response.status}`);
-        }
-
-        const responseData = await response.json();
-        console.log('Response from server:', responseData);
-        alert('Data successfully exported to Google Sheets!');
-    } catch (error) {
-        console.error('Error during export:', error);
-        alert('Failed to export data. Please try again.');
+            console.error("Request failed with status:", response.status);
+            const errorText = await response.text();
+            console.error("Error details:", errorText);
+    } else {
+    const responseData = await response.json();
+    console.log("Response data:", responseData);
     }
+
+} catch (error) {
+    console.error("Error during fetch:", error);
+}
 }
 
 function calculateScoreA(indices) {
