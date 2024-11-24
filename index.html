@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AP Research Survey</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        #consent-form, #survey-section, #feedback-section {
+            margin: 2rem auto;
+            max-width: 600px;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        button {
+            margin: 0.5rem 0;
+            padding: 0.75rem 1.25rem;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .question {
+            margin-bottom: 1rem;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            margin-top: 0.5rem;
+            gap: 0.5rem;
+        }
+        .rating label {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        hr {
+            border: 1px solid #ddd;
+            margin: 1rem 0;
+        }
+
+    </style>
+
+</head>
+<body>
+<div id="consent-form" style="text-align: center">
+    <h1>Consent Form</h1>
+    <img src="https://i.postimg.cc/C5bvbwB7/Connor-s-Consent-Form.png" alt="Consent Form">
+    <button onclick="showBackground()">I Consent</button>
+    <br>
+    <button onclick="declineSurvey()">I Do Not Consent</button>
+    <br>
+</div>
+
+<div id="background-section" style="margin-top: 25%; text-align: center; display: none">
+    <h1>Background</h1>
+    <form id="background-form">
+        <div class="question">
+            <p>What grade are you in high school?</p>
+            <select name="grade" id="grade" required>
+                <option value="" disabled selected>Select your grade</option>
+                <option value="Freshman">Freshman</option>
+                <option value="Sophomore">Sophomore</option>
+                <option value="Junior">Junior</option>
+                <option value="Senior">Senior</option>
+            </select>
+        </div>
+        <br>
+        <b>
+        <p id="info" style="display: none;">
+        For the following questions, please answer them considering only your AP class that assigns the most homework.
+        </p>
+        </b>
+        <br>
+        <button type="button" onclick="showSurvey()">Next</button>
+        <br>
+    </form>
+</div>
+    
+<div id="survey-section" style="display: none;">
+    <h1 id="header 1">Learning Approach Section</h1>
+    <form id="survey-form">
+        <!-- Questions dynamically added here -->
+    </form>
+    <button id="submit-part-a" onclick="submitPartA()">Submit Section 1</button>
+    <br>
+    <div id="section-1-results" style="display: none;">
+        <h2>Section 1 Results</h2>
+        <p id="part-a-feedback"></p>
+        <button onclick="showPartB()">Continue to Section 2</button>
+    </div>
+    <button id="submit-part-b" onclick="submitPartB()" style="display: none;">Submit Section 2</button>
+    <br>
+</div>
+<div id="feedback-section" style="display: none;">
+    <h1 style="text-align: center">Your Final Results</h1>
+    <p id="feedback"></p>
+</div>
+<div id="declined" style="display: none; text-align: center;margin-top: 25%;">
+<p>You have declined to take this survey. If this was a mistake, please refresh the page. Otherwise, if you meant to decline this survey, you may close this page.</p>
+</div>
+<script>
+
+    function showBackground() {
+        document.getElementById('consent-form').style.display = 'none';
+        document.getElementById('info').style.display = 'block';
+        document.getElementById('background-section').style.display = 'block';
+    }
+
+    function showSurvey() {
+        document.getElementById('background-section').style.display = 'none';
+        document.getElementById('survey-section').style.display = 'block';
+
+        const partAQuestions = [
+            "I find that at times studying gives me a feeling of deep personal satisfaction.",
+            "I find that I have to do enough work on a topic so that I can form my own conclusions before I am satisfied.",
+            "My aim is to pass the course while doing as little work as possible.",
+            "I only study seriously what's given out in class or in the course outlines.",
+            "I feel that virtually any topic can be highly interesting once I get into it.",
+            "I find most new topics interesting and often spend extra time trying to obtain more information about them.",
+            "I do not find my course very interesting so I keep my work to the minimum.",
+            "I learn some things by rote, going over and over them until I know them by heart even if I do not understand them.",
+            "I find that studying academic topics can at times be as exciting as a good novel or movie.",
+            "I test myself on important topics until I understand them completely.",
+            "I find I can get by in most assessments by memorising key sections rather than trying to understand them.",
+            "I generally restrict my study to what is specifically set as I think it is unnecessary to do anything extra.",
+            "I work hard at my studies because I find the material interesting.",
+            "I spend a lot of my free time finding out more about interesting topics which have been discussed in different classes.",
+            "I find it is not helpful to study topics in depth. It confuses and wastes time, when all you need is a passing acquaintance with topics.",
+            "I believe that lecturers shouldn't expect students to spend significant amounts of time studying material everyone knows won't be examined.",
+            "I come to most classes with questions in mind that I want answering.",
+            "I make a point of looking at most of the suggested readings that go with the lectures.",
+            "I see no point in learning material which is not likely to be in the examination.",
+            "I find the best way to pass examinations is to try to remember answers to likely questions."
+        ];
+
+        const surveyForm = document.getElementById('survey-form');
+        partAQuestions.forEach((question, index) => {
+            surveyForm.innerHTML += `
+            <div class="question">
+                <p>Question ${index + 1}: ${question}</p>
+                <div class="rating">
+                    <label>Strongly Disagree (1)</label>
+                    <input type="radio" name="question-a${index + 1}" value="1" required>
+                    <input type="radio" name="question-a${index + 1}" value="2">
+                    <input type="radio" name="question-a${index + 1}" value="3">
+                    <input type="radio" name="question-a${index + 1}" value="4">
+                    <input type="radio" name="question-a${index + 1}" value="5">
+                    <label>Strongly Agree (5)</label>
+                </div>
+                <hr>
+            </div>
+        `;
+        });
+    }
+
+    function showPartB() {
+        document.getElementById('section-1-results').style.display = 'none';
+
+        // Clear previous questions from the form
+        const surveyForm = document.getElementById('survey-form');
+        surveyForm.innerHTML = '';
+        document.getElementById('header 1').style.display = 'none';
+
+        // Add header for Section 2
+        const sectionBHeader = `
+        <h2>Procrastination Section</h2>
+        <p>Please rate how much you agree with the following statements considering your AP class:</p>
+    `;
+        surveyForm.innerHTML = sectionBHeader;
+
+        const partBQuestions = [
+            "My performance tends to suffer when I have to race against deadlines.",
+            "I don't do well if I have to rush through a task.",
+            "If I put things off until the last moment, I'm not satisfied with their outcomes.",
+            "I achieve better results if I complete a task at a slower pace, well ahead of a deadline.",
+            "It's really a pain for me to work under upcoming deadlines.",
+            "I'm upset and reluctant to act when I'm forced to work under pressure.",
+            "I feel tense and cannot concentrate when there's too much time pressure on me.",
+            "I'm frustrated when I have to rush to meet deadlines.",
+            "To use my time more efficiently, I deliberately postpone some tasks.",
+            "I intentionally put off work to maximize my motivation.",
+            "In order to make better use of my time, I intentionally put off some tasks.",
+            "I finish most of my assignments right before deadlines because I choose to do so.",
+            "I often start things at the last minute and find it difficult to complete them on time.",
+            "I often fail to accomplish goals that I set for myself.",
+            "I'm often running late when getting things done.",
+            "I have difficulty finishing activities once I start them."
+        ];
+
+        partBQuestions.forEach((question, index) => {
+            surveyForm.innerHTML += `
+            <div class="question">
+                <p>Question ${index + 1}: ${question}</p>
+                <div class="rating">
+                    <label>Strongly Disagree (1)</label>
+                    <input type="radio" name="question-b${index + 1}" value="1" required>
+                    <input type="radio" name="question-b${index + 1}" value="2">
+                    <input type="radio" name="question-b${index + 1}" value="3">
+                    <input type="radio" name="question-b${index + 1}" value="4">
+                    <input type="radio" name="question-b${index + 1}" value="5">
+                    <label>Strongly Agree (5)</label>
+                </div>
+                <hr>
+            </div>
+        `;
+        });
+
+        document.getElementById('submit-part-b').style.display = 'block';
+
+    }
+
+
+function submitPartA() {
+    const deepIndices = [1, 2, 5, 6, 9, 10, 13, 14, 17, 18];
+    const surfaceIndices = [3, 4, 7, 8, 11, 12, 15, 16, 19, 20];
+
+    const deepAverage = calculateScoreA(deepIndices);
+    const surfaceAverage = calculateScoreA(surfaceIndices);
+
+    let feedback = '';
+    if (deepAverage > surfaceAverage) {
+        feedback += "You are more of a deep learner. This means you are more independent in your learning.";
+    } else {
+        feedback += "You are more of a surface learner. This means you are more syllabus-dependent in your learning.";
+    }
+
+    document.getElementById('part-a-feedback').innerHTML = feedback;
+    document.getElementById('submit-part-a').style.display = 'none';
+    document.getElementById('section-1-results').style.display = 'block';
+}
+ 
+
+function submitPartB() {
+    const form = document.getElementById('survey-form');
+    const formData = new FormData(form);
+
+    let procrastinationTotal = 0;
+    let answeredCount = 0;
+
+    // Combine all question handling with check for answers
+    for (let i = 1; i <= 16; i++) {
+        const value = formData.get(`question-b${i}`);
+        if (value) { 
+            answeredCount++;
+            if (i <= 8 || (i >= 13 && i <= 16)) {
+                procrastinationTotal += 6 - parseInt(value, 10); // Reverse scale
+            } else {
+                procrastinationTotal += parseInt(value, 10);
+            }
+        }
+    }
+
+    const procrastinationAverage = answeredCount > 0 ? procrastinationTotal / answeredCount : 0;
+
+    let feedback = '';
+    if (procrastinationAverage > 3) {
+        feedback += "Your results indicate that you are an active procrastinator. You tend to procrastinate intentionally and productively.";
+    } else {
+        feedback += "Your results indicate that you are a passive procrastinator. You tend to procrastinate subconsciously and counterproductively.";
+    }
+    feedback += " Thank you for taking this survey. If you disliked any of your results, don’t worry, they are common and won’t affect you negatively in any way. If you want more information, send a " +
+            "request for this paper to olsen1412@students.d211.org. It will be made available in May.";
+
+    document.getElementById('survey-section').style.display = 'none';
+    document.getElementById('feedback').innerHTML = feedback;
+    document.getElementById('feedback-section').style.display = 'block';
+    exportData(procrastinationAverage);
+}
+
+
+function declineSurvey() {
+        document.getElementById('consent-form').style.display = 'none';
+        document.getElementById('declined').style.display = 'block';
+}
+
+async function exportData(procrastinationAverage) {
+    const age = document.getElementById('grade').value;
+    
+    const deepIndices = [1, 2, 5, 6, 9, 10, 13, 14, 17, 18];
+    const surfaceIndices = [3, 4, 7, 8, 11, 12, 15, 16, 19, 20];
+    const deepMentalIndices = [1, 5, 9, 13, 17];
+    const deepSocialIndices = [2, 6, 10, 14, 18];
+    const surfaceMentalIndices = [3, 7, 11, 15, 19];
+    const surfaceSocialIndices = [4, 8, 12, 16, 20];
+
+    const DA = calculateScoreB(deepIndices);
+    const SA = calculateScoreB(surfaceIndices);
+    const DM = calculateScoreB(deepMentalIndices);
+    const DS = calculateScoreB(deepSocialIndices);
+    const SM = calculateScoreB(surfaceMentalIndices);
+    const SS = calculateScoreB(surfaceSocialIndices);
+
+    const AAPS = procrastinationAverage;
+
+    const data = {
+        age,
+        DA,
+        SA,
+        DM,
+        DS,
+        SM,
+        SS,
+        AAPS,
+    };
+
+    try {
+        const response = await fetch('https://73.44.99.24:8080/proxy', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTPS error! Status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        console.log('Response from server:', responseData);
+        alert('Data successfully exported to Google Sheets!');
+    } catch (error) {
+        console.error('Error during export:', error);
+        alert('Failed to export data. Please try again.');
+    }
+}
+
+function calculateScoreA(indices) {
+    const form = document.getElementById('survey-form');
+    const formData = new FormData(form);
+    let totalScore = 0;
+    let answeredCount = 0;
+
+    indices.forEach(index => {
+        const value = formData.get(`question-a${index}`);
+        
+        if (value !== null && value !== undefined) {
+            console.log(`Answer for question-a${index}: ${value}`);
+            totalScore += parseInt(value, 10);
+            answeredCount++;
+        } else {
+            console.log(`No answer for question-a${index}, value is: ${value}`);
+        }
+    });
+
+    return answeredCount > 0 ? totalScore / answeredCount : 0;
+}
+
+function calculateScoreB(indices) {
+    const form = document.getElementById('survey-form');
+    const formData = new FormData(form);
+    let totalScore = 0;
+    let answeredCount = 0;
+
+    indices.forEach(index => {
+        const value = formData.get(`question-b${index}`);
+        
+        if (value !== null && value !== undefined) {
+            console.log(`Answer for question-b${index}: ${value}`);
+            totalScore += parseInt(value, 10);
+            answeredCount++;
+        } else {
+            console.log(`No answer for question-b${index}, value is: ${value}`);
+        }
+    });
+
+    return answeredCount > 0 ? totalScore / answeredCount : 0;
+}
+
+</script>
+</body>
+</html>
