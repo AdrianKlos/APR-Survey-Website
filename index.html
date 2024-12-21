@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AP Research Survey</title>
     <style>
-
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -39,6 +38,16 @@
 
         .question {
             margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #eaf4fe;
+            border: 1px solid #b6d7f3;
+            border-radius: 5px;
+        }
+
+        .question p {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #0056b3;
         }
 
         .rating {
@@ -47,17 +56,30 @@
             margin-top: 0.5rem;
             gap: 0.5rem;
         }
+
         .rating label {
             font-size: 0.9rem;
             color: #555;
         }
+
         hr {
             border: 1px solid #ddd;
             margin: 1rem 0;
         }
 
-    </style>
+        #background-section, #survey-section {
+            background-color: #fdfdfd;
+        }
 
+        #feedback-section {
+            background-color: #eaf9e8;
+            border: 1px solid #b7ddb3;
+        }
+
+        #feedback-section h1 {
+            color: #3b873e;
+        }
+    </style>
 </head>
 <body>
 <div id="consent-form" style="text-align: center">
@@ -84,37 +106,40 @@
         </div>
         <br>
         <b>
-        <p id="info" style="display: none;">
-        For the following questions, please answer them considering only your AP class that assigns the most homework.
-        </p>
+            <p id="info" style="display: none;">
+                For the following questions, please answer them considering only your AP class that assigns the most homework.
+            </p>
         </b>
         <br>
         <button type="button" onclick="showSurvey()">Next</button>
         <br>
     </form>
 </div>
-    
+
 <div id="survey-section" style="display: none;">
-    <h1 id="header 1">Learning Approach Section</h1>
+    <h1 id="header 1" style="text-align: center">Learning Approach Section</h1>
     <form id="survey-form">
         <!-- Questions dynamically added here -->
     </form>
-    <button id="submit-part-a" onclick="submitPartA()">Submit Section 1</button>
+    <br>
+    <button id="submit-part-a" onclick="submitPartA()" style="margin-left: 35%">Submit Section 1</button>
     <br>
     <div id="section-1-results" style="display: none;">
-        <h2>Section 1 Results</h2>
-        <p id="part-a-feedback"></p>
-        <button onclick="showPartB()">Continue to Section 2</button>
+        <h2 style="text-align: center">Section 1 Results</h2>
+        <p id="part-a-feedback" style="text-align: center"></p>
+        <button onclick="showPartB()" style="margin-left: 35%">Continue to Section 2</button>
     </div>
-    <button id="submit-part-b" onclick="submitPartB()" style="display: none;">Submit Section 2</button>
+    <button id="submit-part-b" onclick="submitPartB()" style="display: none; margin-left: 35%">Submit Section 2</button>
     <br>
 </div>
 <div id="feedback-section" style="display: none;">
     <h1 style="text-align: center">Your Final Results</h1>
     <p id="feedback"></p>
+    <p id="email"><a href="mailto:olsen1412@students.d211.org">olsen1412@students.d211.org</a>. It will be made available in May.
+    </p>
 </div>
-<div id="declined" style="display: none; text-align: center;margin-top: 25%;">
-<p>You have declined to take this survey. If this was a mistake, please refresh the page. Otherwise, if you meant to decline this survey, you may close this page.</p>
+<div id="declined" style="display: none; text-align: center; margin-top: 25%;">
+    <p>You have declined to take this survey. If this was a mistake, please refresh the page. Otherwise, if you meant to decline this survey, you may close this page.</p>
 </div>
 <script>
 
@@ -165,7 +190,7 @@
                     <input type="radio" name="question-a${index + 1}" value="5">
                     <label>Strongly Agree (5)</label>
                 </div>
-                <hr>
+                <br>
             </div>
         `;
         });
@@ -181,7 +206,7 @@
 
         // Add header for Section 2
         const sectionBHeader = `
-        <h2>Procrastination Section</h2>
+        <h2 style="text-align: center">Procrastination Section</h2>
         <p>Please rate how much you agree with the following statements considering your AP class:</p>
     `;
         surveyForm.innerHTML = sectionBHeader;
@@ -218,7 +243,7 @@
                     <input type="radio" name="question-b${index + 1}" value="5">
                     <label>Strongly Agree (5)</label>
                 </div>
-                <hr>
+                <br>
             </div>
         `;
         });
@@ -227,153 +252,155 @@
 
     }
 
-let DA = 0;
-let SA = 0;
-let DM = 0;
-let DS = 0;
-let SM = 0;
-let SS = 0;
+    let DA = 0;
+    let SA = 0;
+    let DM = 0;
+    let DS = 0;
+    let SM = 0;
+    let SS = 0;
 
-function submitPartA() {
+    function submitPartA() {
 
-    const deepIndices = [1, 2, 5, 6, 9, 10, 13, 14, 17, 18];
-    const surfaceIndices = [3, 4, 7, 8, 11, 12, 15, 16, 19, 20];
-    const deepMentalIndices = [1, 5, 9, 13, 17];
-    const deepSocialIndices = [2, 6, 10, 14, 18];
-    const surfaceMentalIndices = [3, 7, 11, 15, 19];
-    const surfaceSocialIndices = [4, 8, 12, 16, 20];
-    const deepAverage = calculateScore(deepIndices);
-    const surfaceAverage = calculateScore(surfaceIndices);
+        const deepIndices = [1, 2, 5, 6, 9, 10, 13, 14, 17, 18];
+        const surfaceIndices = [3, 4, 7, 8, 11, 12, 15, 16, 19, 20];
+        const deepMentalIndices = [1, 5, 9, 13, 17];
+        const deepSocialIndices = [2, 6, 10, 14, 18];
+        const surfaceMentalIndices = [3, 7, 11, 15, 19];
+        const surfaceSocialIndices = [4, 8, 12, 16, 20];
+        const deepAverage = calculateScore(deepIndices);
+        const surfaceAverage = calculateScore(surfaceIndices);
 
-    DA = deepAverage;
-    SA = surfaceAverage;
-    DM = calculateScore(deepMentalIndices);
-    DS = calculateScore(deepSocialIndices);
-    SM = calculateScore(surfaceMentalIndices);
-    SS = calculateScore(surfaceSocialIndices);
+        DA = deepAverage;
+        SA = surfaceAverage;
+        DM = calculateScore(deepMentalIndices);
+        DS = calculateScore(deepSocialIndices);
+        SM = calculateScore(surfaceMentalIndices);
+        SS = calculateScore(surfaceSocialIndices);
 
-    let feedback = '';
-    if (deepAverage > surfaceAverage) {
-        feedback += "You are more of a deep learner. This means you are more independent in your learning.";
-    } else {
-        feedback += "You are more of a surface learner. This means you are more syllabus-dependent in your learning.";
+        let feedback = '';
+        if (deepAverage > surfaceAverage) {
+            feedback += "You are more of a deep learner. This means you are more independent in your learning.";
+        } else {
+            feedback += "You are more of a surface learner. This means you are more syllabus-dependent in your learning.";
+        }
+
+        document.getElementById('part-a-feedback').innerHTML = feedback;
+        document.getElementById('submit-part-a').style.display = 'none';
+        document.getElementById('section-1-results').style.display = 'block';
     }
 
-    document.getElementById('part-a-feedback').innerHTML = feedback;
-    document.getElementById('submit-part-a').style.display = 'none';
-    document.getElementById('section-1-results').style.display = 'block';
-}
- 
 
-function submitPartB() {
-    const form = document.getElementById('survey-form');
-    const formData = new FormData(form);
+    function submitPartB() {
+        const form = document.getElementById('survey-form');
+        const formData = new FormData(form);
 
-    let procrastinationTotal = 0;
-    let answeredCount = 0;
+        let procrastinationTotal = 0;
+        let answeredCount = 0;
 
-    // Combine all question handling with check for answers
-    for (let i = 1; i <= 16; i++) {
-        const value = formData.get(`question-b${i}`);
-        if (value) { 
-            answeredCount++;
-            if (i <= 8 || (i >= 13 && i <= 16)) {
-                procrastinationTotal += 6 - parseInt(value, 10); // Reverse scale
-            } else {
-                procrastinationTotal += parseInt(value, 10);
+        // Combine all question handling with check for answers
+        for (let i = 1; i <= 16; i++) {
+            const value = formData.get(`question-b${i}`);
+            if (value) {
+                answeredCount++;
+                if (i <= 8 || (i >= 13 && i <= 16)) {
+                    procrastinationTotal += 6 - parseInt(value, 10); // Reverse scale
+                } else {
+                    procrastinationTotal += parseInt(value, 10);
+                }
             }
         }
+
+        const procrastinationAverage = answeredCount > 0 ? procrastinationTotal / answeredCount : 0;
+
+        let feedback = '';
+        if (procrastinationAverage > 3) {
+            feedback += "Your results indicate that you are an active procrastinator. You tend to procrastinate intentionally and productively.";
+        } else {
+            feedback += "Your results indicate that you are a passive procrastinator. You tend to procrastinate subconsciously and counterproductively.";
+        }
+        feedback += " Thank you for taking this survey. If you disliked any of your results, don’t worry, they are common and won’t affect you negatively in any way. If you want more information, send a " +
+            "request for this paper to "
+        feedback += document.getElementById('email').innerHTML
+
+        document.getElementById('survey-section').style.display = 'none';
+        document.getElementById('feedback').innerHTML = feedback;
+        document.getElementById('feedback-section').style.display = 'block';
+        document.getElementById('email').style.display = 'none';
+        exportData(procrastinationAverage);
     }
 
-    const procrastinationAverage = answeredCount > 0 ? procrastinationTotal / answeredCount : 0;
 
-    let feedback = '';
-    if (procrastinationAverage > 3) {
-        feedback += "Your results indicate that you are an active procrastinator. You tend to procrastinate intentionally and productively.";
-    } else {
-        feedback += "Your results indicate that you are a passive procrastinator. You tend to procrastinate subconsciously and counterproductively.";
-    }
-    feedback += " Thank you for taking this survey. If you disliked any of your results, don’t worry, they are common and won’t affect you negatively in any way. If you want more information, send a " +
-            "request for this paper to olsen1412@students.d211.org. It will be made available in May.";
-
-    document.getElementById('survey-section').style.display = 'none';
-    document.getElementById('feedback').innerHTML = feedback;
-    document.getElementById('feedback-section').style.display = 'block';
-    exportData(procrastinationAverage);
-}
-
-
-function declineSurvey() {
+    function declineSurvey() {
         document.getElementById('consent-form').style.display = 'none';
         document.getElementById('declined').style.display = 'block';
-}
-
-async function exportData(procrastinationAverage) {
-
-    const grade = document.getElementById('grade').value;
-
-    const AAPS = procrastinationAverage;
-
-    const data = {
-        grade,
-        DA,
-        SA,
-        DM,
-        DS,
-        SM,
-        SS,
-        AAPS,
-    };
-
-try {
-    console.log("Sending data:", data);
-    const response = await fetch('https://apresearchsurvey.hopto.org:8080/proxy', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-    
-    console.log("Response received:", response);
-
-    // Check if the response is OK before trying to parse it
-    if (!response.ok) {
-        console.error("Request failed with status:", response.status);
-        const errorText = await response.text();
-        console.error("Error details:", errorText);
-    } else {
-        // Only parse the response if it's successful
-        const responseData = await response.json();
-        console.log("Response data:", responseData);
     }
-} catch (error) {
-    console.error("Error during fetch:", error);
-}
 
-}
+    async function exportData(procrastinationAverage) {
 
+        const grade = document.getElementById('grade').value;
 
-function calculateScore(indices) {
-    const form = document.getElementById('survey-form');
-    const formData = new FormData(form);
-    let totalScore = 0;
-    let answeredCount = 0;
+        const AAPS = procrastinationAverage;
 
-    indices.forEach(index => {
-        const value = formData.get(`question-a${index}`);
-        
-        if (value !== null && value !== undefined) {
-            console.log(`Answer for question-a${index}: ${value}`);
-            totalScore += parseInt(value, 10);
-            answeredCount++;
-        } else {
-            console.log(`No answer for question-a${index}, value is: ${value}`);
+        const data = {
+            grade,
+            DA,
+            SA,
+            DM,
+            DS,
+            SM,
+            SS,
+            AAPS,
+        };
+
+        try {
+            console.log("Sending data:", data);
+            const response = await fetch('https://apresearchsurvey.hopto.org:8080/proxy', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            console.log("Response received:", response);
+
+            // Check if the response is OK before trying to parse it
+            if (!response.ok) {
+                console.error("Request failed with status:", response.status);
+                const errorText = await response.text();
+                console.error("Error details:", errorText);
+            } else {
+                // Only parse the response if it's successful
+                const responseData = await response.json();
+                console.log("Response data:", responseData);
+            }
+        } catch (error) {
+            console.error("Error during fetch:", error);
         }
-    });
 
-    return answeredCount > 0 ? totalScore / answeredCount : 0;
-}
+    }
+
+
+    function calculateScore(indices) {
+        const form = document.getElementById('survey-form');
+        const formData = new FormData(form);
+        let totalScore = 0;
+        let answeredCount = 0;
+
+        indices.forEach(index => {
+            const value = formData.get(`question-a${index}`);
+
+            if (value !== null && value !== undefined) {
+                console.log(`Answer for question-a${index}: ${value}`);
+                totalScore += parseInt(value, 10);
+                answeredCount++;
+            } else {
+                console.log(`No answer for question-a${index}, value is: ${value}`);
+            }
+        });
+
+        return answeredCount > 0 ? totalScore / answeredCount : 0;
+    }
 
 
 </script>
