@@ -144,14 +144,14 @@
 <script>
 
     function showBackground() {
-        let shutdown = 1; // This survey is no longer taking responses per request of the client.
         document.getElementById('consent-form').style.display = 'none';
         document.getElementById('info').style.display = 'block';
         document.getElementById('background-section').style.display = 'block';
+        let shutdown = 1; // This survey is no longer taking responses per request of the client.
         if shutdown == 1 {
             document.getElementById('showSurvey').innerHTML = 'This survey is no longer taking repsones per request of the primary researcher. Click to see original wesbite anyway.';
             }
-        }
+        
         
     }
 
