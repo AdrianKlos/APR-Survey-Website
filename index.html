@@ -111,7 +111,7 @@
             </p>
         </b>
         <br>
-        <button type="button" onclick="showSurvey()">Next</button>
+        <button id= "showSurvey" type="button" onclick="showSurvey()">Next</button>
         <br>
     </form>
 </div>
@@ -144,9 +144,15 @@
 <script>
 
     function showBackground() {
+        let shutdown = 1; // This survey is no longer taking responses per request of the client.
+        if shutdown == 1 {
+            document.getElementById('showSurvey').textContent = 'This survey is no longer taking repsones per request of the primary researcher. Click to see original wesbite anyway.';
+        }
         document.getElementById('consent-form').style.display = 'none';
         document.getElementById('info').style.display = 'block';
         document.getElementById('background-section').style.display = 'block';
+        }
+        
     }
 
     function showSurvey() {
