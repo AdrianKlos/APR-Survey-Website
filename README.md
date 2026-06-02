@@ -1,0 +1,3 @@
+This is a website I built to host a survey for a client who was researching procrastination among adolescents in order to compare passive and active procrastination via regression models. I stored data gathered from Likert Scales and calculated specific sociological metrics (like ability to self-manage deadlines). I sent them over to a server I was hosting on another device and uploaded the data to a spreadsheet from there. In this repository you will see how I managed data collection, packaging, and uploading.
+
+If the link to the website does not work, it means my certificate expired and I forgot to renew it. Sorry if that's the case.
